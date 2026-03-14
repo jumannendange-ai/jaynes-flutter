@@ -3,7 +3,7 @@ workflows:
     name: Build Flutter APK
     instance_type: mac_mini_m1
     environment:
-      flutter: latest
+      flutter: 3.24.0
       java: 17
     scripts:
       - name: Get packages
