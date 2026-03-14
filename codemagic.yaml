@@ -1,7 +1,7 @@
 workflows:
   android-workflow:
     name: Build Flutter APK
-    instance_type: linux_x2
+    instance_type: mac_mini_m1
     environment:
       flutter: latest
       java: 17
