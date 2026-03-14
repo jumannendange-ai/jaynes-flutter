@@ -1,0 +1,21 @@
+workflows:
+  android-workflow:
+    name: Build Flutter APK
+    instance_type: linux_x2
+    environment:
+      flutter: 3.19.0
+      java: 17
+    scripts:
+      - name: Enable AndroidX
+        script: |
+          cd android
+          echo "android.useAndroidX=true" >> gradle.properties
+          echo "android.enableJetifier=true" >> gradle.properties
+          cd ..
+      - name: Get packages
+        script: flutter pub get
+      - name: Build APK
+        script: |
+          cd android && ./gradlew assembleDebug
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
