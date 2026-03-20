@@ -23,6 +23,11 @@ android {
         release {
             signingConfig signingConfigs.debug
             minifyEnabled false
+            shrinkResources false
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled false
         }
     }
 
