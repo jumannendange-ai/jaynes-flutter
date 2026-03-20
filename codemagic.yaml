@@ -1,9 +1,9 @@
 workflows:
   android-release:
-    name: JAYNES MAX TV - Android
+    name: JAYNES MAX TV
     max_build_duration: 60
     environment:
-      flutter: 3.22.3
+      flutter: 3.24.5
       java: 17
     scripts:
       - name: Get packages
