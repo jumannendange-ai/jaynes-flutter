@@ -14,29 +14,27 @@ class SessionService {
     return _instance!;
   }
 
-  // Auth
   Future<void> saveToken(String token) => _prefs.setString(Constants.prefToken, token);
   String? get token => _prefs.getString(Constants.prefToken);
   bool get isLoggedIn => token != null && token!.isNotEmpty;
 
-  // User
   Future<void> saveUser(String id, String email, String name) async {
     await _prefs.setString(Constants.prefUserId, id);
     await _prefs.setString(Constants.prefUserEmail, email);
     await _prefs.setString(Constants.prefUserName, name);
   }
+
   String get userId    => _prefs.getString(Constants.prefUserId)    ?? '';
   String get userEmail => _prefs.getString(Constants.prefUserEmail) ?? '';
   String get userName  => _prefs.getString(Constants.prefUserName)  ?? 'Mtumiaji';
 
-  // Premium
   Future<void> setPremium(bool premium, String expires) async {
     await _prefs.setBool(Constants.prefIsPremium, premium);
     await _prefs.setString(Constants.prefSubExpires, expires);
   }
-  bool   get isPremium   => _prefs.getBool(Constants.prefIsPremium)       ?? false;
-  String get subExpires  => _prefs.getString(Constants.prefSubExpires)    ?? '';
 
-  // Logout
+  bool   get isPremium  => _prefs.getBool(Constants.prefIsPremium)    ?? false;
+  String get subExpires => _prefs.getString(Constants.prefSubExpires) ?? '';
+
   Future<void> logout() => _prefs.clear();
 }

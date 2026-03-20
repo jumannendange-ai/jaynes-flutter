@@ -5,10 +5,11 @@ class Channel {
   final String name;
   final String? imageUrl;
   final String streamUrl;
-  final String? drmKey;   // "kid:key" format
-  final String drmType;   // "CLEARKEY" / "WIDEVINE" / "NONE"
-  final String streamType; // "hls" / "dash"
+  final String? drmKey;
+  final String drmType;
+  final String streamType;
   final String? category;
+  final bool isLive;
 
   Channel({
     required this.id,
@@ -19,6 +20,7 @@ class Channel {
     this.drmType = 'NONE',
     this.streamType = 'hls',
     this.category,
+    this.isLive = false,
   });
 
   bool get isFree {
@@ -30,7 +32,6 @@ class Channel {
   bool get isDash => streamType == 'dash' || streamUrl.contains('.mpd');
   bool get hasDrm => drmKey != null && drmKey!.isNotEmpty;
 
-  // Parse from pixtvmax API (key.php)
   factory Channel.fromPixtvmax(Map<String, dynamic> json) {
     String? key;
     final drmType = json['drm_type'] ?? 'NONE';
@@ -55,7 +56,6 @@ class Channel {
     );
   }
 
-  // Parse from channels.php / live API
   factory Channel.fromLive(Map<String, dynamic> json) {
     final url = json['url'] ?? '';
     return Channel(
@@ -66,10 +66,10 @@ class Channel {
       drmType:    'NONE',
       streamType: url.contains('.m3u8') ? 'hls' : 'dash',
       category:   json['category'],
+      isLive:     true,
     );
   }
 
-  // Parse from azam.php (zimo + lipopo)
   factory Channel.fromAzam(Map<String, dynamic> json) {
     return Channel(
       id:         json['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
@@ -100,10 +100,45 @@ class SubscriptionPlan {
   });
 
   static const List<SubscriptionPlan> all = [
-    SubscriptionPlan(id: 'weekly',  name: 'Wiki Moja',    price: 1000,  duration: 'Wiki 1',   days: 7),
-    SubscriptionPlan(id: 'monthly', name: 'Mwezi Moja',   price: 3000,  duration: 'Mwezi 1',  days: 30),
-    SubscriptionPlan(id: '3month',  name: 'Miezi Mitatu', price: 8000,  duration: 'Miezi 3',  days: 90),
-    SubscriptionPlan(id: '6month',  name: 'Miezi Sita',   price: 15000, duration: 'Miezi 6',  days: 180),
-    SubscriptionPlan(id: 'annual',  name: 'Mwaka Mzima',  price: 25000, duration: 'Mwaka 1',  days: 365),
+    SubscriptionPlan(id: 'weekly',  name: 'Wiki Moja',    price: 1000,  duration: '7 Siku',    days: 7),
+    SubscriptionPlan(id: 'monthly', name: 'Mwezi Moja',   price: 3000,  duration: '30 Siku',   days: 30),
+    SubscriptionPlan(id: '3month',  name: 'Miezi Mitatu', price: 8000,  duration: '90 Siku',   days: 90),
+    SubscriptionPlan(id: '6month',  name: 'Miezi Sita',   price: 15000, duration: '180 Siku',  days: 180),
+    SubscriptionPlan(id: 'annual',  name: 'Mwaka Mzima',  price: 25000, duration: '365 Siku',  days: 365),
   ];
+}
+
+class MatchScore {
+  final String homeTeam;
+  final String awayTeam;
+  final String? homeLogo;
+  final String? awayLogo;
+  final String score;
+  final String status;
+  final String? league;
+  final String? time;
+
+  MatchScore({
+    required this.homeTeam,
+    required this.awayTeam,
+    this.homeLogo,
+    this.awayLogo,
+    required this.score,
+    required this.status,
+    this.league,
+    this.time,
+  });
+
+  factory MatchScore.fromJson(Map<String, dynamic> json) {
+    return MatchScore(
+      homeTeam: json['home_team'] ?? json['home'] ?? '',
+      awayTeam: json['away_team'] ?? json['away'] ?? '',
+      homeLogo: json['home_logo'] ?? json['home_image'],
+      awayLogo: json['away_logo'] ?? json['away_image'],
+      score:    json['score'] ?? '0 - 0',
+      status:   json['status'] ?? 'FT',
+      league:   json['league'] ?? json['competition'],
+      time:     json['time'] ?? json['minute'],
+    );
+  }
 }

@@ -9,14 +9,12 @@ import 'account_screen.dart';
 class MainScreen extends StatefulWidget {
   final SessionService session;
   const MainScreen({super.key, required this.session});
-
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
   int _index = 0;
-
   late final List<Widget> _screens;
 
   @override
@@ -36,16 +34,22 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(index: _index, children: _screens),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: AppColors.border)),
+          border: Border(top: BorderSide(color: AppColors.border, width: 0.5)),
         ),
         child: BottomNavigationBar(
           currentIndex: _index,
           onTap: (i) => setState(() => _index = i),
+          backgroundColor: AppColors.card,
+          selectedItemColor: AppColors.red,
+          unselectedItemColor: AppColors.muted,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 11),
+          unselectedLabelStyle: const TextStyle(fontSize: 11),
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined),        activeIcon: Icon(Icons.home),        label: 'Nyumbani'),
-            BottomNavigationBarItem(icon: Icon(Icons.grid_view_outlined),   activeIcon: Icon(Icons.grid_view),   label: 'Makundi'),
-            BottomNavigationBarItem(icon: Icon(Icons.sports_soccer_outlined),activeIcon: Icon(Icons.sports_soccer),label: 'Live'),
-            BottomNavigationBarItem(icon: Icon(Icons.person_outline),       activeIcon: Icon(Icons.person),      label: 'Akaunti'),
+            BottomNavigationBarItem(icon: Icon(Icons.home_outlined),         activeIcon: Icon(Icons.home),          label: 'Nyumbani'),
+            BottomNavigationBarItem(icon: Icon(Icons.grid_view_outlined),    activeIcon: Icon(Icons.grid_view),     label: 'Makundi'),
+            BottomNavigationBarItem(icon: Icon(Icons.sports_soccer_outlined),activeIcon: Icon(Icons.sports_soccer), label: 'Live'),
+            BottomNavigationBarItem(icon: Icon(Icons.person_outline),        activeIcon: Icon(Icons.person),        label: 'Akaunti'),
           ],
         ),
       ),

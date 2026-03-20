@@ -12,7 +12,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
-    systemNavigationBarColor: Color(0xFF060610),
+    systemNavigationBarColor: Color(0xFF050508),
   ));
   final session = await SessionService.getInstance();
   runApp(JaynesApp(session: session));

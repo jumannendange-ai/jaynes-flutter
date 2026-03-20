@@ -7,7 +7,6 @@ import '../utils/app_theme.dart';
 class CategoriesScreen extends StatefulWidget {
   final SessionService session;
   const CategoriesScreen({super.key, required this.session});
-
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
@@ -31,44 +30,51 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       backgroundColor: AppColors.bg,
       appBar: AppBar(title: const Text('MAKUNDI')),
       body: RefreshIndicator(
-        color: AppColors.accent,
+        color: AppColors.red,
         onRefresh: _load,
         child: _loading
-            ? const Center(child: CircularProgressIndicator(color: AppColors.accent))
+            ? const Center(child: CircularProgressIndicator(color: AppColors.red))
             : GridView.builder(
                 padding: const EdgeInsets.all(12),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 1.2,
+                  crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 1.3,
                 ),
                 itemCount: _cats.length,
                 itemBuilder: (_, i) {
                   final cat = _cats[i];
                   return GestureDetector(
-                    onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(cat['name'] ?? ''), backgroundColor: AppColors.card),
-                    ),
+                    onTap: () {},
                     child: Container(
                       decoration: BoxDecoration(
                         color: AppColors.card,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                         border: Border.all(color: AppColors.border),
                       ),
                       child: Stack(fit: StackFit.expand, children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(14),
                           child: cat['image'] != null && cat['image'].toString().isNotEmpty
                               ? Opacity(
-                                  opacity: 0.5,
+                                  opacity: 0.4,
                                   child: CachedNetworkImage(imageUrl: cat['image'], fit: BoxFit.cover),
                                 )
                               : Container(color: AppColors.card2),
                         ),
-                        Center(
-                          child: Text(cat['name'] ?? '',
-                            style: const TextStyle(color: AppColors.text, fontWeight: FontWeight.bold, fontSize: 14),
-                            textAlign: TextAlign.center,
+                        // Gradient overlay
+                        Container(decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter, end: Alignment.bottomCenter,
+                            colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
                           ),
-                        ),
+                        )),
+                        Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          const Icon(Icons.grid_view, color: AppColors.red, size: 28),
+                          const SizedBox(height: 6),
+                          Text(cat['name'] ?? '',
+                            style: const TextStyle(color: AppColors.text, fontWeight: FontWeight.w800, fontSize: 13),
+                            textAlign: TextAlign.center, maxLines: 2),
+                        ])),
                       ]),
                     ),
                   );

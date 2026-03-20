@@ -11,8 +11,6 @@ class ApiService {
     'Origin':       Constants.fawaOrigin,
   };
 
-  // ─── Auth ──────────────────────────────────────────────────────────────────
-
   static Future<Map<String, dynamic>> login(String email, String password) async {
     final res = await http.post(
       Uri.parse('${Constants.apiAuth}?action=login'),
@@ -31,9 +29,6 @@ class ApiService {
     return jsonDecode(res.body);
   }
 
-  // ─── Channels ──────────────────────────────────────────────────────────────
-
-  // pixtvmax channels (MPD + ClearKey) - from key.php
   static Future<List<Channel>> fetchPixtvmaxChannels() async {
     try {
       final res = await http.get(Uri.parse(Constants.apiPixtvmax), headers: _headers)
@@ -43,12 +38,9 @@ class ApiService {
           .where((c) => c['mpd_url'] != null && (c['mpd_url'] as String).contains('.mpd'))
           .map((c) => Channel.fromPixtvmax(c))
           .toList();
-    } catch (e) {
-      return [];
-    }
+    } catch (e) { return []; }
   }
 
-  // Azam channels via zimotv + lipopotv - from azam.php
   static Future<List<Channel>> fetchAzamChannels() async {
     try {
       final res = await http.get(Uri.parse(Constants.apiAzam), headers: _headers)
@@ -61,13 +53,10 @@ class ApiService {
     return [];
   }
 
-  // Live match channels - from channels.php
   static Future<List<Channel>> fetchLiveChannels({String category = 'mechi za leo'}) async {
     try {
-      final uri = Uri.parse(Constants.apiChannels).replace(
-          queryParameters: {'category': category});
-      final res = await http.get(uri, headers: _headers)
-          .timeout(const Duration(seconds: 20));
+      final uri = Uri.parse(Constants.apiChannels).replace(queryParameters: {'category': category});
+      final res = await http.get(uri, headers: _headers).timeout(const Duration(seconds: 20));
       final data = jsonDecode(res.body);
       if (data['success'] == true && data['channels'] != null) {
         return (data['channels'] as List).map((c) => Channel.fromLive(c)).toList();
@@ -76,7 +65,6 @@ class ApiService {
     return [];
   }
 
-  // Local channels - local.php
   static Future<List<Channel>> fetchLocalChannels() async {
     try {
       final res = await http.get(Uri.parse(Constants.apiLocal), headers: _headers)
@@ -89,7 +77,6 @@ class ApiService {
     return [];
   }
 
-  // Categories
   static Future<List<Map<String, dynamic>>> fetchCategories() async {
     try {
       final res = await http.get(Uri.parse(Constants.apiCategories), headers: _headers)
@@ -102,7 +89,18 @@ class ApiService {
     return [];
   }
 
-  // ─── Payment ───────────────────────────────────────────────────────────────
+  static Future<List<MatchScore>> fetchScores() async {
+    try {
+      final res = await http.get(Uri.parse(Constants.apiScores), headers: _headers)
+          .timeout(const Duration(seconds: 15));
+      final data = jsonDecode(res.body);
+      final list = data['matches'] ?? data['scores'] ?? data ?? [];
+      if (list is List) {
+        return list.map((m) => MatchScore.fromJson(m)).toList();
+      }
+    } catch (e) {}
+    return [];
+  }
 
   static Future<Map<String, dynamic>> submitPayment({
     required String token,
@@ -117,8 +115,6 @@ class ApiService {
     );
     return jsonDecode(res.body);
   }
-
-  // ─── Account status ────────────────────────────────────────────────────────
 
   static Future<Map<String, dynamic>> getAccountStatus(String token) async {
     try {
