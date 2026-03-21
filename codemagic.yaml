@@ -8,7 +8,9 @@ workflows:
       - name: Build APK
         script: |
           flutter pub get
-          flutter build apk --release --no-tree-shake-icons
+          cd android && ./gradlew assembleRelease
+          find . -name "*.apk" -type f
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
-      - build/app/outputs/apk/release/app-release.apk
+      - android/app/build/outputs/apk/release/app-release.apk
+      - android/app/build/outputs/apk/**/*.apk
+      - "**/*.apk"
