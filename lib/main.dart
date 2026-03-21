@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:media_kit/media_kit.dart';
-import 'services/session_service.dart';
+import 'utils/theme.dart';
 import 'screens/splash_screen.dart';
-import 'utils/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MediaKit.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
-    systemNavigationBarColor: Color(0xFF050508),
+    systemNavigationBarColor: Color(0xFF0E0E16),
   ));
-  final session = await SessionService.getInstance();
-  runApp(JaynesApp(session: session));
+  await Supabase.initialize(
+    url: 'https://dablnrggyfcddmdeiqxi.supabase.co',
+    anonKey: 'sb_publishable_d8mzJ3iulCU7YdlV_lrdQw_32pOzDXc',
+  );
+  MediaKit.ensureInitialized();
+  runApp(const JaynesApp());
 }
 
 class JaynesApp extends StatelessWidget {
-  final SessionService session;
-  const JaynesApp({super.key, required this.session});
-
+  const JaynesApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'JAYNES MAX TV',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      home: SplashScreen(session: session),
+      theme: appTheme,
+      home: const SplashScreen(),
     );
   }
 }
