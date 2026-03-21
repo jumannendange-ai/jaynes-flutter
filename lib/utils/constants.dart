@@ -1,5 +1,5 @@
 class Constants {
-  static const String baseUrl       = 'https://dde.ct.ws/';
+  static const String baseUrl       = 'http://jaynestvmax.infinityfreeapp.com/';
   static const String supabaseUrl   = 'https://dablnrggyfcddmdeiqxi.supabase.co';
   static const String supabaseKey   = 'sb_publishable_d8mzJ3iulCU7YdlV_lrdQw_32pOzDXc';
 
