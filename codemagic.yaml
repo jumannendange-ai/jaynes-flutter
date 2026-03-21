@@ -9,6 +9,8 @@ workflows:
       - name: Get packages
         script: flutter pub get
       - name: Build APK
-        script: flutter build apk --release --no-tree-shake-icons
+        script: |
+          flutter build apk --release --no-tree-shake-icons
+          cp build/app/outputs/flutter-apk/app-release.apk $CM_BUILD_DIR/app-release.apk
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
+      - app-release.apk
