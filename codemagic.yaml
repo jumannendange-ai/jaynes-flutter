@@ -3,17 +3,11 @@ workflows:
     name: Android Release
     max_build_duration: 60
     environment:
-      flutter: 3.24.0
+      flutter: 3.19.6
       java: 17
     scripts:
       - name: Get packages
-        script: |
-          flutter pub get
-          flutter pub deps
-      - name: Clean generated
-        script: |
-          rm -f android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
-          rm -f android/app/src/main/kotlin/io/flutter/plugins/GeneratedPluginRegistrant.kt
+        script: flutter pub get
       - name: Build APK
         script: flutter build apk --release --no-tree-shake-icons
     artifacts:

@@ -1,29 +1,40 @@
-plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
 }
 
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+assert flutterRoot != null, "flutter.sdk not set in local.properties"
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
 android {
-    namespace "com.jaynesmaxtv.app"
-    compileSdk 35
-    ndkVersion "27.0.12077973"
+    compileSdkVersion 34
+    ndkVersion "25.1.8937393"
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = '1.8'
     }
+
     defaultConfig {
         applicationId "com.jaynesmaxtv.app"
-        minSdk 21
-        targetSdk 35
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 9
         versionName "4.0.0"
         multiDexEnabled true
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.debug
@@ -34,9 +45,10 @@ android {
 }
 
 flutter {
-    source = "../.."
+    source '../..'
 }
 
 dependencies {
-    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0"
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
