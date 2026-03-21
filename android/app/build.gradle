@@ -1,12 +1,10 @@
-plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.jaynesmaxtv.app"
-    compileSdk 35
+    compileSdkVersion 35
     ndkVersion "27.0.12077973"
 
     compileOptions {
@@ -14,12 +12,12 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = '11'
     }
     defaultConfig {
         applicationId "com.jaynesmaxtv.app"
-        minSdk 21
-        targetSdk 35
+        minSdkVersion 21
+        targetSdkVersion 35
         versionCode 8
         versionName "4.0.0"
         multiDexEnabled true
@@ -34,9 +32,9 @@ android {
 }
 
 flutter {
-    source = "../.."
+    source '../..'
 }
 
 dependencies {
-    implementation "androidx.multidex:multidex:2.0.1"
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
