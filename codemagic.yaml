@@ -1,0 +1,14 @@
+workflows:
+  android-release:
+    name: Android Release
+    max_build_duration: 60
+    environment:
+      flutter: 3.41.5
+    scripts:
+      - name: Build APK
+        script: |
+          flutter pub get
+          flutter build apk --release --no-tree-shake-icons
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+      - build/app/outputs/apk/release/app-release.apk
