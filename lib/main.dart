@@ -18,18 +18,16 @@ void main() async {
     anonKey: 'sb_publishable_d8mzJ3iulCU7YdlV_lrdQw_32pOzDXc',
   );
   MediaKit.ensureInitialized();
-  runApp(const JaynesApp());
+  runApp(const App());
 }
 
-class JaynesApp extends StatelessWidget {
-  const JaynesApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'JAYNES MAX TV',
-      debugShowCheckedModeBanner: false,
-      theme: appTheme,
-      home: const SplashScreen(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'JAYNES MAX TV',
+    debugShowCheckedModeBanner: false,
+    theme: appTheme,
+    home: const SplashScreen(),
+  );
 }

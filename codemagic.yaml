@@ -9,11 +9,9 @@ workflows:
       - name: Get packages
         script: flutter pub get
       - name: Build APK
-        script: flutter build apk --release --no-tree-shake-icons 2>&1
-      - name: Find APK
-        script: find / -name "*.apk" 2>/dev/null || echo "No APK"
+        script: flutter build apk --release --no-tree-shake-icons
     artifacts:
-      - "**/*.apk"
+      - build/app/outputs/flutter-apk/app-release.apk
     publishing:
       email:
         recipients:
