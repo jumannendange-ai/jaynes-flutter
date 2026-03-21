@@ -5,11 +5,15 @@ workflows:
     environment:
       flutter: 3.24.0
       java: 17
-      vars:
-        FLUTTER_ROOT: /Users/builder/programs/flutter
     scripts:
       - name: Get packages
-        script: flutter pub get
+        script: |
+          flutter pub get
+          flutter pub deps
+      - name: Clean generated
+        script: |
+          rm -f android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+          rm -f android/app/src/main/kotlin/io/flutter/plugins/GeneratedPluginRegistrant.kt
       - name: Build APK
         script: flutter build apk --release --no-tree-shake-icons
     artifacts:
