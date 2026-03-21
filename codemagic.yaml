@@ -3,13 +3,12 @@ workflows:
     name: Android Release
     max_build_duration: 60
     environment:
-      flutter: 3.41.5
+      flutter: 3.24.0
+      java: 17
     scripts:
       - name: Get packages
         script: flutter pub get
       - name: Build APK
-        script: flutter build apk --release --no-tree-shake-icons
-      - name: Find APK
-        script: find . -name "*.apk" -type f 2>/dev/null || echo "No APK found"
+        script: flutter build apk --release --no-tree-shake-icons --verbose 2>&1 | tail -50
     artifacts:
       - "**/*.apk"
