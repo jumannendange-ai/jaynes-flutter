@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:media_kit/media_kit.dart';
 import 'utils/theme.dart';
 import 'screens/splash_screen.dart';
 
@@ -17,7 +16,6 @@ void main() async {
     url: 'https://dablnrggyfcddmdeiqxi.supabase.co',
     anonKey: 'sb_publishable_d8mzJ3iulCU7YdlV_lrdQw_32pOzDXc',
   );
-  MediaKit.ensureInitialized();
   runApp(const App());
 }
 
