@@ -19,7 +19,7 @@ class Channel {
 }
 
 class ChannelService {
-  static const _base = 'https://dde.ct.ws';
+  static const _base = 'https://jaynes-api.onrender.com';
   static const _h = {'User-Agent': 'Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 Chrome/120 Mobile Safari/537.36', 'Referer': 'http://www.fawanews.sc/', 'Origin': 'http://www.fawanews.sc'};
 
   static Future<List<Channel>> fetchAzam() => _f('$_base/azam.php');
