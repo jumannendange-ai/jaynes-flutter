@@ -15,7 +15,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.jaynesmaxtv.app"
-    compileSdkVersion 35
+    compileSdkVersion 34
     ndkVersion "25.1.8937393"
 
     compileOptions {
@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId "com.jaynesmaxtv.app"
         minSdkVersion 21
-        targetSdkVersion 35
+        targetSdkVersion 34
         versionCode 9
         versionName "4.0.0"
         multiDexEnabled true
